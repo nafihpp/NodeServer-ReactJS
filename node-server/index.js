@@ -14,9 +14,8 @@ let userList = [
     },
 ];
 
-const jsonParser = bodyParser.json();
-
 const server = createServer((req, res) => {
+    res.setHeader("Access-Control-Allow-Origin", "*");
     switch (req.url) {
         case "/": {
             if (req.method === "GET") {
@@ -39,10 +38,12 @@ const server = createServer((req, res) => {
             }
         }
         case "/users": {
+            res.writeHead(200, { "Content-Type": "text/plain" });
+            res.end(JSON.stringify(userList));
+            break;
         }
     }
 });
-server.use(jsonParser);
 server.listen(4000, () => {
     console.log("listening to port");
 });

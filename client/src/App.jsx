@@ -3,22 +3,14 @@ import axios from "axios";
 import "./App.css";
 
 function App() {
-    const [input, setInput] = useState("");
-    const handleChange = (e) => {
-        setInput(e.target.value);
-    };
+    const [data, setData] = useState([]);
 
-    const config = {
-        headers: {
-            "Content-Type": "application/json",
-            "Access-Control-Allow-Origin": "http://localhost:5173",
-        },
-    };
-    const submit = (e) => {
+    const submit = () => {
         axios
-            .post("https://localhost:4000/", { input: input }, config)
+            .get("http://localhost:4000/users")
             .then((response) => {
-                console.log(response.data); // Handle the response data
+                console.log(response.data);
+                setData(response.data); // Handle the response data
             })
             .catch((error) => {
                 console.error(error); // Handle the error
@@ -27,11 +19,8 @@ function App() {
     return (
         <>
             <div className="">
-                <input
-                    placeholder="enter to post to the array"
-                    onChange={handleChange}
-                />
-                <button onClick={submit}>submit</button>
+                <button onClick={submit}>Get from Api</button>
+                {data && data.map((user) => <h1>{user.userName}</h1>)}
             </div>
         </>
     );
