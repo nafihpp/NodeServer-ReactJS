@@ -32,6 +32,7 @@ const server = createServer((req, res) => {
                 try {
                     const data = JSON.parse(req.body);
                     console.log(data);
+                    data && userList.push(data);
                 } catch (e) {
                     console.log(e);
                 }
